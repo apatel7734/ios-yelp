@@ -13,6 +13,7 @@
 		75925F0A19CA4E2E0001DE1F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75925F0919CA4E2E0001DE1F /* Images.xcassets */; };
 		75925F0D19CA4E2E0001DE1F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75925F0B19CA4E2E0001DE1F /* LaunchScreen.xib */; };
 		75925F1919CA4E2E0001DE1F /* YelpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75925F1819CA4E2E0001DE1F /* YelpTests.swift */; };
+		75C4D76B19CBFE8000192675 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4D76A19CBFE8000192675 /* BusinessTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		75925F1219CA4E2E0001DE1F /* YelpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YelpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75925F1719CA4E2E0001DE1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75925F1819CA4E2E0001DE1F /* YelpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpTests.swift; sourceTree = "<group>"; };
+		75C4D76A19CBFE8000192675 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +79,13 @@
 		75925EFF19CA4E2E0001DE1F /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				75C4D76919CBFE3500192675 /* View Controllers */,
 				75925F0219CA4E2E0001DE1F /* AppDelegate.swift */,
-				75925F0419CA4E2E0001DE1F /* ViewController.swift */,
 				75925F0619CA4E2E0001DE1F /* Main.storyboard */,
 				75925F0919CA4E2E0001DE1F /* Images.xcassets */,
 				75925F0B19CA4E2E0001DE1F /* LaunchScreen.xib */,
 				75925F0019CA4E2E0001DE1F /* Supporting Files */,
+				75C4D76A19CBFE8000192675 /* BusinessTableViewCell.swift */,
 			);
 			path = Yelp;
 			sourceTree = "<group>";
@@ -110,6 +113,14 @@
 				75925F1719CA4E2E0001DE1F /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		75C4D76919CBFE3500192675 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				75925F0419CA4E2E0001DE1F /* ViewController.swift */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +225,7 @@
 			files = (
 				75925F0519CA4E2E0001DE1F /* ViewController.swift in Sources */,
 				75925F0319CA4E2E0001DE1F /* AppDelegate.swift in Sources */,
+				75C4D76B19CBFE8000192675 /* BusinessTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +417,7 @@
 				75925F1E19CA4E2E0001DE1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		75925F1F19CA4E2E0001DE1F /* Build configuration list for PBXNativeTarget "YelpTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +426,7 @@
 				75925F2119CA4E2E0001DE1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
