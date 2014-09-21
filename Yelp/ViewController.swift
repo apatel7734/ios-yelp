@@ -9,8 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource  {
+
+    @IBOutlet weak var filterUIBarButton: UIBarButtonItem!
     
     @IBOutlet var businessTableView: UITableView!
+    var businesses = [Business]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +23,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         businessTableView.delegate = self
         businessTableView.dataSource = self
         
+        var yc = YelpClient()
+        yc.searchWithTerm("Thai", success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+
+            if let tmpBusinesses = self.getBusinessFromJsonObject(response){
+                self.businesses = tmpBusinesses
+                self.businessTableView.reloadData()
+            }
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("Error code = \(error.code)")
+        }
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,17 +56,53 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("businesscell") as BusinessTableViewCell
-        cell.locationNameLabel.text = "1. Basil Thai Restaurant and Bar"
-        cell.addressLabel.text = "1175 Folsom st, Soma"
-        cell.categoryLabel.text = "Thai, Seafood, Salad"
-        cell.reviewsLabel.text = "469 Reviews"
-        cell.distanceLabel.text = "0.07mi"
-        
+
+        if self.businesses.count > 0{
+            cell.locationNameLabel.text = self.businesses[indexPath.row].name
+            cell.addressLabel.text = self.businesses[indexPath.row].locationAddress
+            // cell.categoryLabel.text = self.businesses[indexPath.row].categories as S
+            cell.reviewsLabel.text = "\(self.businesses[indexPath.row].reviewCount) Reviews"
+            cell.distanceLabel.text = "0.07mi"
+            if(!self.businesses[indexPath.row].thumbImageUrl.isEmpty){
+                cell.thumImageView.setImageWithURL(NSURL(string: self.businesses[indexPath.row].thumbImageUrl))
+                //make imageview rounded corners
+                cell.thumImageView.layer.cornerRadius = 8.0
+                cell.thumImageView.clipsToBounds = true
+            }
+            
+            if(!self.businesses[indexPath.row].ratingsImageUrl.isEmpty){
+                cell.ratingsImageView.setImageWithURL(NSURL(string: self.businesses[indexPath.row].ratingsImageUrl))
+            }
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return businesses.count
+    }
+    
+    
+    func getBusinessFromJsonObject (businessJsonObj: AnyObject!) -> [Business]?{
+        
+        var isValidJsonObj = NSJSONSerialization.isValidJSONObject(businessJsonObj)
+        if(isValidJsonObj){
+            let jsonData: NSData! = NSJSONSerialization.dataWithJSONObject(businessJsonObj, options: nil, error: nil)
+            let jsonObject = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil) as NSDictionary
+            var businesses = [Business]()
+            
+            let jsonBusinesses = jsonObject["businesses"] as [NSDictionary]
+            for jsonBusinessObj in jsonBusinesses{
+                var businessModel = Business()
+                businessModel.id = jsonBusinessObj["id"] as String
+                businessModel.name = jsonBusinessObj["name"] as String
+                businessModel.ratingsImageUrl = jsonBusinessObj["rating_img_url"] as String
+                businessModel.thumbImageUrl = jsonBusinessObj["image_url"] as String
+                businessModel.reviewCount = jsonBusinessObj["review_count"] as Int
+                businesses += [businessModel]
+            }
+            return businesses
+        }
+        return nil
     }
     
     
