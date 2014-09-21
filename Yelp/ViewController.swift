@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource  {
-
+    
     @IBOutlet weak var filterUIBarButton: UIBarButtonItem!
     
     @IBOutlet var businessTableView: UITableView!
@@ -24,8 +24,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         businessTableView.dataSource = self
         
         var yc = YelpClient()
-        yc.searchWithTerm("Thai", success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-
+        yc.searchWithTerm("chipotle", success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            
             if let tmpBusinesses = self.getBusinessFromJsonObject(response){
                 self.businesses = tmpBusinesses
                 self.businessTableView.reloadData()
@@ -34,7 +34,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println("Error code = \(error.code)")
         }
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,13 +56,29 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("businesscell") as BusinessTableViewCell
-
+        
         if self.businesses.count > 0{
             cell.locationNameLabel.text = self.businesses[indexPath.row].name
             cell.addressLabel.text = self.businesses[indexPath.row].locationAddress
-            // cell.categoryLabel.text = self.businesses[indexPath.row].categories as S
+            var categories = self.businesses[indexPath.row].categories
+            var listCategories: String = ""
+            
+            for category in categories{
+                if(!listCategories.isEmpty){
+                    listCategories = "\(listCategories), \(category[0])"
+                }else{
+                    listCategories = category[0]
+                }
+            }
+            
+            if(!listCategories.isEmpty){
+                cell.categoryLabel.text = listCategories
+            }
+            
             cell.reviewsLabel.text = "\(self.businesses[indexPath.row].reviewCount) Reviews"
             cell.distanceLabel.text = "0.07mi"
+            cell.priceLabel.text = "$$"
+            
             if(!self.businesses[indexPath.row].thumbImageUrl.isEmpty){
                 cell.thumImageView.setImageWithURL(NSURL(string: self.businesses[indexPath.row].thumbImageUrl))
                 //make imageview rounded corners
@@ -98,6 +114,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 businessModel.ratingsImageUrl = jsonBusinessObj["rating_img_url"] as String
                 businessModel.thumbImageUrl = jsonBusinessObj["image_url"] as String
                 businessModel.reviewCount = jsonBusinessObj["review_count"] as Int
+                businessModel.categories = jsonBusinessObj["categories"] as [[String]]
+                var location = jsonBusinessObj["location"] as NSDictionary
+                var address = location["address"] as NSArray
+                if(address.count > 0){
+                    businessModel.locationAddress = address[0] as String
+                }
+                
                 businesses += [businessModel]
             }
             return businesses

@@ -14,7 +14,7 @@ class Business{
         
     }
     var id: String!
-    var categories: [String]!
+    var categories = [[String]]()
     var name: String!
     var thumbImageUrl: String!
     var ratingsImageUrl: String!
