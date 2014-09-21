@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource  {
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, FilterUIViewControllerProtocol  {
     
     @IBOutlet weak var filterUIBarButton: UIBarButtonItem!
     
@@ -22,6 +22,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //MARK - delegates
         businessTableView.delegate = self
         businessTableView.dataSource = self
+        
         
         var yc = YelpClient()
         yc.searchWithTerm("chipotle", success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
@@ -45,6 +46,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBAction func filterButtonClicked(sender: AnyObject) {
         println("Filter clicked")
+
     }
     
     
@@ -98,6 +100,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        if(segue.destinationViewController.isKindOfClass(FilterUIViewController)){
+            var destinationVC = segue.destinationViewController as FilterUIViewController
+            destinationVC.delegate = self
+        }
+    }
+    
+    
     func getBusinessFromJsonObject (businessJsonObj: AnyObject!) -> [Business]?{
         
         var isValidJsonObj = NSJSONSerialization.isValidJSONObject(businessJsonObj)
@@ -126,6 +137,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             return businesses
         }
         return nil
+    }
+    
+    func searchDidFinish(test: String) {
+        println(test)
     }
     
     

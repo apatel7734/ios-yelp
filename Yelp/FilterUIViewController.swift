@@ -8,12 +8,20 @@
 
 import UIKit
 
+protocol FilterUIViewControllerProtocol{
+    func searchDidFinish(test: String)
+}
+
 class FilterUIViewController: UIViewController {
 
+    var delegate: FilterUIViewControllerProtocol? = nil
+    
     @IBOutlet weak var price1Button: UIButton!
     @IBOutlet weak var price2Button: UIButton!
     @IBOutlet weak var price3Button: UIButton!
     @IBOutlet weak var price4Button: UIButton!
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,15 +51,20 @@ class FilterUIViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func searchButtonClicked(sender: UIBarButtonItem) {
+        if(delegate != nil ){
+            delegate?.searchDidFinish("Search")
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
-    */
+    
+    @IBAction func cancelButtonClicked(sender: UIBarButtonItem) {
+        if(delegate != nil ){
+            delegate?.searchDidFinish("Cancel")
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+
+    
 
 }
