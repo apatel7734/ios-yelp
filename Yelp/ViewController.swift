@@ -35,7 +35,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println("Error code = \(error.code)")
         }
-        
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,7 +46,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBAction func filterButtonClicked(sender: AnyObject) {
         println("Filter clicked")
-
+        
     }
     
     
@@ -101,7 +101,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        
         if(segue.destinationViewController.isKindOfClass(FilterUIViewController)){
             var destinationVC = segue.destinationViewController as FilterUIViewController
             destinationVC.delegate = self
@@ -138,8 +138,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return nil
     }
     
-    func searchDidFinish(test: String) {
-        println(test)
+    func searchDidFinish(test: [String]) {
+        var defaults = NSUserDefaults.standardUserDefaults()
+        for key in test {
+            println("\(key) = \(defaults.valueForKey(key))")
+        }
     }
     
     

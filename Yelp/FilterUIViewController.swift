@@ -10,7 +10,7 @@ import UIKit
 
 protocol FilterUIViewControllerProtocol{
     
-    func searchDidFinish(test: String)
+    func searchDidFinish(test: [String])
 }
 
 class FilterUIViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -22,7 +22,7 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
     var categoriesSectoin0 = ["Take-out","Good for Groups","Takes Reservations","Outdoor Seating","Full Bar"]
     var sortSection1 = ["Best Match", "Distance", "Rating"]
     var radiusSection2 = ["5","0.3","1","20"]
-    
+    var savedKeys: [String] = [String]()
     var switchStatus: [String:Bool] = [String:Bool]()
     
     //section : isExpanded or Not
@@ -38,7 +38,9 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
         filterTableView.dataSource = self
         filterTableView.delegate = self
+        //setup defaults
         isExpanded[0] = true
+        
         
     }
     
@@ -50,14 +52,14 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func searchButtonClicked(sender: UIBarButtonItem) {
         if(delegate != nil ){
             saveFilterValues()
-            delegate?.searchDidFinish("Search")
+            delegate?.searchDidFinish(savedKeys)
             self.navigationController?.popViewControllerAnimated(true)
         }
     }
     
     @IBAction func cancelButtonClicked(sender: UIBarButtonItem) {
         if(delegate != nil ){
-            delegate?.searchDidFinish("Cancel")
+            delegate?.searchDidFinish(savedKeys)
             self.navigationController?.popViewControllerAnimated(true)
         }
     }
@@ -183,18 +185,21 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
         var defaults = NSUserDefaults.standardUserDefaults()
         //save all switch values
         for (key,value) in switchStatus{
-            println("switchUI key \(key) and value = \(value)")
+            savedKeys += [key]
             defaults.setBool(value, forKey: key)
         }
         
-        for (key,value) in selectedRow{
-            if(key == 0){
-            }else if(key == 1){
-                println("switchUI key \(self.sectionsArr[key]) and value = \(sortSection1[value])")
-                defaults.setValue(self.sectionsArr[key], forKey: sortSection1[value])
-            }else if (key == 2){
-                println("switchUI key \(self.sectionsArr[key]) and value = \(radiusSection2[value])")
-                defaults.setValue(self.sectionsArr[key], forKey: radiusSection2[value])
+        for (section, selectedRow) in self.selectedRow{
+            if(section == 0){
+            }else if(section == 1){
+                var strKey: String = self.sectionsArr[section]
+                defaults.setValue(sortSection1[section], forKey: strKey)
+                savedKeys += [strKey]
+                
+            }else if (section == 2){
+                var strKey: String = self.sectionsArr[section]
+                savedKeys += [strKey]
+                defaults.setValue(radiusSection2[section], forKey: strKey)
             }
         }
         
