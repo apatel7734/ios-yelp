@@ -131,7 +131,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 if(address.count > 0){
                     businessModel.locationAddress = address[0] as String
                 }
-                
                 businesses += [businessModel]
             }
             return businesses

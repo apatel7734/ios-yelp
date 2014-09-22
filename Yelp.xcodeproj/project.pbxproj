@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7581734419CF43A5006C0719 /* firstCustomCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581734319CF43A5006C0719 /* firstCustomCellTableViewCell.swift */; };
+		7581734619CF44A2006C0719 /* secondCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581734519CF44A2006C0719 /* secondCustomTableViewCell.swift */; };
+		7581734A19CF4A17006C0719 /* headerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581734919CF4A17006C0719 /* headerViewTableViewCell.swift */; };
+		7581734C19CF7D90006C0719 /* customUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581734B19CF7D90006C0719 /* customUISwitch.swift */; };
 		75925F0319CA4E2E0001DE1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75925F0219CA4E2E0001DE1F /* AppDelegate.swift */; };
 		75925F0519CA4E2E0001DE1F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75925F0419CA4E2E0001DE1F /* ViewController.swift */; };
 		75925F0819CA4E2E0001DE1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75925F0619CA4E2E0001DE1F /* Main.storyboard */; };
@@ -33,6 +37,10 @@
 
 /* Begin PBXFileReference section */
 		05D9860B46334C7A865750E2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7581734319CF43A5006C0719 /* firstCustomCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firstCustomCellTableViewCell.swift; sourceTree = "<group>"; };
+		7581734519CF44A2006C0719 /* secondCustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secondCustomTableViewCell.swift; sourceTree = "<group>"; };
+		7581734919CF4A17006C0719 /* headerViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = headerViewTableViewCell.swift; sourceTree = "<group>"; };
+		7581734B19CF7D90006C0719 /* customUISwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customUISwitch.swift; sourceTree = "<group>"; };
 		75925EFD19CA4E2E0001DE1F /* Yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75925F0119CA4E2E0001DE1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75925F0219CA4E2E0001DE1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +147,10 @@
 			children = (
 				75925F0419CA4E2E0001DE1F /* ViewController.swift */,
 				75C4D77219CD2E2600192675 /* FilterUIViewController.swift */,
+				7581734319CF43A5006C0719 /* firstCustomCellTableViewCell.swift */,
+				7581734519CF44A2006C0719 /* secondCustomTableViewCell.swift */,
+				7581734919CF4A17006C0719 /* headerViewTableViewCell.swift */,
+				7581734B19CF7D90006C0719 /* customUISwitch.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -287,12 +299,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				75925F0519CA4E2E0001DE1F /* ViewController.swift in Sources */,
+				7581734C19CF7D90006C0719 /* customUISwitch.swift in Sources */,
 				75C4D77A19CE3CA200192675 /* Business.swift in Sources */,
 				75C4D77319CD2E2600192675 /* FilterUIViewController.swift in Sources */,
+				7581734A19CF4A17006C0719 /* headerViewTableViewCell.swift in Sources */,
 				75C4D77119CD1D9500192675 /* FilterUIBarButtonItem.swift in Sources */,
+				7581734619CF44A2006C0719 /* secondCustomTableViewCell.swift in Sources */,
 				75925F0319CA4E2E0001DE1F /* AppDelegate.swift in Sources */,
 				75C4D77519CDFA1500192675 /* YelpClient.swift in Sources */,
 				75C4D76B19CBFE8000192675 /* BusinessTableViewCell.swift in Sources */,
+				7581734419CF43A5006C0719 /* firstCustomCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
