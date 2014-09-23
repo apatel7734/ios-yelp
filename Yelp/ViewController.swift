@@ -8,9 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, FilterUIViewControllerProtocol  {
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, FilterUIViewControllerProtocol,UITextFieldDelegate  {
     
     @IBOutlet weak var filterUIBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var searchTextField: UITextField!
+    
     
     @IBOutlet var businessTableView: UITableView!
     var businesses = [Business]()
@@ -23,18 +26,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         businessTableView.delegate = self
         businessTableView.dataSource = self
         
-        
-        var yc = YelpClient()
-        yc.searchWithTerm("chipotle", success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-            
-            if let tmpBusinesses = self.getBusinessFromJsonObject(response){
-                self.businesses = tmpBusinesses
-                self.businessTableView.reloadData()
-            }
-            
-            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                println("Error code = \(error.code)")
-        }
+        searchTextField.delegate = self
 
     }
     
@@ -47,6 +39,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBAction func filterButtonClicked(sender: AnyObject) {
         println("Filter clicked")
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        println("Search should return \(textField.text)")
+        searchWithQueryAndUpdateTable(textField.text)
+        textField.resignFirstResponder()
+        return true
     }
     
     
@@ -108,6 +107,21 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
     }
     
+    func searchWithQueryAndUpdateTable(query: String){
+        var yc = YelpClient()
+        yc.searchWithTerm(query, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            
+            if let tmpBusinesses = self.getBusinessFromJsonObject(response){
+                self.businesses = tmpBusinesses
+                self.businessTableView.reloadData()
+            }
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("Error code = \(error.code)")
+        }
+
+    }
+    
     
     func getBusinessFromJsonObject (businessJsonObj: AnyObject!) -> [Business]?{
         
@@ -123,7 +137,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 businessModel.id = jsonBusinessObj["id"] as String
                 businessModel.name = jsonBusinessObj["name"] as String
                 businessModel.ratingsImageUrl = jsonBusinessObj["rating_img_url"] as String
-                businessModel.thumbImageUrl = jsonBusinessObj["image_url"] as String
+                businessModel.thumbImageUrl = jsonBusinessObj["image_url"] as? String
                 businessModel.reviewCount = jsonBusinessObj["review_count"] as Int
                 businessModel.categories = jsonBusinessObj["categories"] as [[String]]
                 var location = jsonBusinessObj["location"] as NSDictionary
