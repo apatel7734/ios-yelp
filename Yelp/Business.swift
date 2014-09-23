@@ -20,5 +20,6 @@ class Business{
     var ratingsImageUrl: String!
     var reviewCount: Int = 0
     var locationAddress: String!
+    var distance: Double!
 
 }

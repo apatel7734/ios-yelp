@@ -27,6 +27,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         businessTableView.dataSource = self
         
         searchTextField.delegate = self
+        
+        
+        // test data
+        var business = Business()
+        business.name = "Test Restaurants name longer than usual"
+        business.locationAddress = "530 Bethlehem st, Alenwood, PA"
+        business.reviewCount = 300
+        business.distance = 0.07
+        businesses += [business]
+        businessTableView.reloadData()
 
     }
     
@@ -80,15 +90,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             cell.distanceLabel.text = "0.07mi"
             cell.priceLabel.text = "$$"
             
-            if(!self.businesses[indexPath.row].thumbImageUrl.isEmpty){
-                cell.thumImageView.setImageWithURL(NSURL(string: self.businesses[indexPath.row].thumbImageUrl))
+            if let thumbUrl = self.businesses[indexPath.row].thumbImageUrl {
+                cell.thumImageView.setImageWithURL(NSURL(string: thumbUrl))
                 //make imageview rounded corners
                 cell.thumImageView.layer.cornerRadius = 8.0
                 cell.thumImageView.clipsToBounds = true
             }
             
-            if(!self.businesses[indexPath.row].ratingsImageUrl.isEmpty){
-                cell.ratingsImageView.setImageWithURL(NSURL(string: self.businesses[indexPath.row].ratingsImageUrl))
+            if let ratingsUrl = self.businesses[indexPath.row].ratingsImageUrl{
+                cell.ratingsImageView.setImageWithURL(NSURL(string: ratingsUrl))
             }
         }
         return cell
