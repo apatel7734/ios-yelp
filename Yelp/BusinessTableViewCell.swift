@@ -18,10 +18,6 @@ class BusinessTableViewCell: UITableViewCell {
     @IBOutlet weak var ratingsImageView: UIImageView!
     @IBOutlet weak var thumImageView: UIImageView!
     
-    @IBOutlet weak var priceLabel: UILabel!
-    
-    
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

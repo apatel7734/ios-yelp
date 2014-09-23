@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, FilterUIViewControllerProtocol,UITextFieldDelegate  {
     
-    @IBOutlet weak var filterUIBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var filterButton: UIButton!
     
     @IBOutlet weak var searchTextField: UITextField!
     
@@ -28,6 +29,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         searchTextField.delegate = self
         
+        businessTableView.rowHeight = UITableViewAutomaticDimension
         
         // test data
         var business = Business()
@@ -88,7 +90,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
             cell.reviewsLabel.text = "\(self.businesses[indexPath.row].reviewCount) Reviews"
             cell.distanceLabel.text = "0.07mi"
-            cell.priceLabel.text = "$$"
             
             if let thumbUrl = self.businesses[indexPath.row].thumbImageUrl {
                 cell.thumImageView.setImageWithURL(NSURL(string: thumbUrl))
