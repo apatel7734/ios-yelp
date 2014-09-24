@@ -27,9 +27,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //MARK - delegates
         businessTableView.delegate = self
         businessTableView.dataSource = self
-        
         searchTextField.delegate = self
         
+        //button UI changes
         filterButton.layer.borderWidth = 1.0
         filterButton.layer.cornerRadius = 5
         filterButton.layer.borderColor = UIColor.grayColor().CGColor
@@ -70,8 +70,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         var cell = tableView.dequeueReusableCellWithIdentifier("businesscell") as BusinessTableViewCell
         
         if self.businesses.count > 0{
+            
             cell.locationNameLabel.text = self.businesses[indexPath.row].name
             cell.addressLabel.text = self.businesses[indexPath.row].locationAddress
+            
             var categories = self.businesses[indexPath.row].categories
             var listCategories: String = ""
             
@@ -101,6 +103,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 cell.ratingsImageView.setImageWithURL(NSURL(string: ratingsUrl))
             }
         }
+        
         return cell
     }
     
@@ -108,14 +111,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return businesses.count
     }
     
+    //TODO - Still need to work on it to pass pages instead same term
     func scrollViewDidScroll(scrollView: UIScrollView) {
-
+        
         var currentOffset = scrollView.contentOffset.y
         var maxOffset = scrollView.contentSize.height - scrollView.frame.size.height
         if (maxOffset - currentOffset <= 10.0 && !loading) {
-            println("Reloading")
-                searchWithQueryAndUpdateTable(self.searchedTerm)
-                loading = true
+            searchWithQueryAndUpdateTable(self.searchedTerm)
+            loading = true
         }
     }
     
@@ -131,7 +134,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         var parameters = []
         yc.searchWithTerm(query, parameters: nil,success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
             
-            if let tmpBusinesses = self.getBusinessFromJsonObject(response){
+            if let tmpBusinesses = YelpClient.getBusinessFromJsonObject(response){
                 self.businesses += tmpBusinesses
                 self.businessTableView.reloadData()
                 self.loading = false
@@ -140,43 +143,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println("Error code = \(error.code)")
         }
-        
     }
     
-    
-    func getBusinessFromJsonObject (businessJsonObj: AnyObject!) -> [Business]?{
-        
-        var isValidJsonObj = NSJSONSerialization.isValidJSONObject(businessJsonObj)
-        if(isValidJsonObj){
-            let jsonData: NSData! = NSJSONSerialization.dataWithJSONObject(businessJsonObj, options: nil, error: nil)
-            let jsonObject = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil) as NSDictionary
-            var businesses = [Business]()
-            
-            let jsonBusinesses = jsonObject["businesses"] as [NSDictionary]
-            for jsonBusinessObj in jsonBusinesses{
-                var businessModel = Business()
-                businessModel.id = jsonBusinessObj["id"] as String
-                businessModel.name = jsonBusinessObj["name"] as String
-                businessModel.ratingsImageUrl = jsonBusinessObj["rating_img_url"] as String
-                println("\(businessModel.ratingsImageUrl)")
-                businessModel.thumbImageUrl = jsonBusinessObj["image_url"] as? String
-                businessModel.reviewCount = jsonBusinessObj["review_count"] as Int
-                if let categories: AnyObject = jsonBusinessObj["categories"]{
-                    businessModel.categories = categories as [[String]]
-                }
-                
-                var location = jsonBusinessObj["location"] as NSDictionary
-                var address = location["address"] as NSArray
-                if(address.count > 0){
-                    businessModel.locationAddress = address[0] as String
-                }
-                businesses += [businessModel]
-            }
-            return businesses
-        }
-        return nil
-    }
-    
+    //TODO - Still need to work on using data passed from filter model 
+    // Search delegate method
     func searchDidFinish(savedKeys: [String]) {
         println("searchDidFinish")
         var defaults = NSUserDefaults.standardUserDefaults()

@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Yelp/FilterUIViewController.swift"
-            timestampString = "433206083.264007"
+            timestampString = "433225489.806613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "searchButtonClicked(_:)"
             landmarkType = "5">
          </BreakpointContent>

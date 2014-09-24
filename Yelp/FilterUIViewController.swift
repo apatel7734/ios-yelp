@@ -23,6 +23,7 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
     var sortSection1 = ["Best Match", "Distance", "Rating"]
     var radiusSection2 = ["5","0.3","1","20"]
     
+    
     var savedKeys: [String] = [String]()
     var switchStatus: [String:Bool] = [String:Bool]()
     
@@ -67,6 +68,7 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func switchValueChanged(sender: UISwitch!){
+        
         if let customSwitch  =  sender as? customUISwitch {
             println("section \(customSwitch.indexPath.section) , Row \(customSwitch.indexPath.row) - \(customSwitch.on)")
             if(customSwitch.indexPath.section == 0){
@@ -173,13 +175,13 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
         filterTableView.reloadData()
     }
     
-//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 40.0
-//    }
-//    
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return 50.0
-//    }
+    //    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    //        return 40.0
+    //    }
+    //
+    //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    //        return 50.0
+    //    }
     
     
     func saveFilterValues(){
