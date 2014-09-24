@@ -10,7 +10,7 @@ import UIKit
 
 protocol FilterUIViewControllerProtocol{
     
-    func searchDidFinish(test: [String])
+    func searchDidFinish(savedKeys: [String])
 }
 
 class FilterUIViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -22,6 +22,7 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
     var categoriesSectoin0 = ["Take-out","Good for Groups","Takes Reservations","Outdoor Seating","Full Bar"]
     var sortSection1 = ["Best Match", "Distance", "Rating"]
     var radiusSection2 = ["5","0.3","1","20"]
+    
     var savedKeys: [String] = [String]()
     var switchStatus: [String:Bool] = [String:Bool]()
     
@@ -53,15 +54,15 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
         if(delegate != nil ){
             saveFilterValues()
             delegate?.searchDidFinish(savedKeys)
-            self.navigationController?.popViewControllerAnimated(true)
         }
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func cancelButtonClicked(sender: UIBarButtonItem) {
         if(delegate != nil ){
             delegate?.searchDidFinish(savedKeys)
-            self.navigationController?.popViewControllerAnimated(true)
         }
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     
@@ -172,13 +173,13 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
         filterTableView.reloadData()
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40.0
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50.0
-    }
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 40.0
+//    }
+//    
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return 50.0
+//    }
     
     
     func saveFilterValues(){
@@ -202,7 +203,6 @@ class FilterUIViewController: UIViewController, UITableViewDelegate, UITableView
                 defaults.setValue(radiusSection2[section], forKey: strKey)
             }
         }
-        
         // synchronize
         defaults.synchronize()
     }

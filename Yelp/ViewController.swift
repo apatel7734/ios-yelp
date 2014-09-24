@@ -15,7 +15,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBOutlet weak var searchTextField: UITextField!
     
-    
+    var loading: Bool = false;
+    var searchedTerm: String = "food"
     @IBOutlet var businessTableView: UITableView!
     var businesses = [Business]()
     
@@ -29,17 +30,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         searchTextField.delegate = self
         
+        filterButton.layer.borderWidth = 1.0
+        filterButton.layer.cornerRadius = 5
+        filterButton.layer.borderColor = UIColor.grayColor().CGColor
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         businessTableView.rowHeight = UITableViewAutomaticDimension
-        
-        // test data
-        var business = Business()
-        business.name = "Test Restaurants name longer than usual"
-        business.locationAddress = "530 Bethlehem st, Alenwood, PA"
-        business.reviewCount = 300
-        business.distance = 0.07
-        businesses += [business]
-        businessTableView.reloadData()
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,6 +52,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         println("Search should return \(textField.text)")
+        self.searchedTerm = textField.text
+        self.businesses.removeAll(keepCapacity: true)
         searchWithQueryAndUpdateTable(textField.text)
         textField.resignFirstResponder()
         return true
@@ -109,28 +108,39 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return businesses.count
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+
+        var currentOffset = scrollView.contentOffset.y
+        var maxOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        if (maxOffset - currentOffset <= 10.0 && !loading) {
+            println("Reloading")
+                searchWithQueryAndUpdateTable(self.searchedTerm)
+                loading = true
+        }
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if(segue.destinationViewController.isKindOfClass(FilterUIViewController)){
-            var destinationVC = segue.destinationViewController as FilterUIViewController
-            destinationVC.delegate = self
-        }
+        var navigationController = segue.destinationViewController as UINavigationController
+        var destinationVC = navigationController.viewControllers[0] as FilterUIViewController
+        destinationVC.delegate = self
     }
     
     func searchWithQueryAndUpdateTable(query: String){
         var yc = YelpClient()
-        yc.searchWithTerm(query, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+        var parameters = []
+        yc.searchWithTerm(query, parameters: nil,success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
             
             if let tmpBusinesses = self.getBusinessFromJsonObject(response){
-                self.businesses = tmpBusinesses
+                self.businesses += tmpBusinesses
                 self.businessTableView.reloadData()
+                self.loading = false
             }
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                 println("Error code = \(error.code)")
         }
-
+        
     }
     
     
@@ -148,9 +158,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 businessModel.id = jsonBusinessObj["id"] as String
                 businessModel.name = jsonBusinessObj["name"] as String
                 businessModel.ratingsImageUrl = jsonBusinessObj["rating_img_url"] as String
+                println("\(businessModel.ratingsImageUrl)")
                 businessModel.thumbImageUrl = jsonBusinessObj["image_url"] as? String
                 businessModel.reviewCount = jsonBusinessObj["review_count"] as Int
-                businessModel.categories = jsonBusinessObj["categories"] as [[String]]
+                if let categories: AnyObject = jsonBusinessObj["categories"]{
+                    businessModel.categories = categories as [[String]]
+                }
+                
                 var location = jsonBusinessObj["location"] as NSDictionary
                 var address = location["address"] as NSArray
                 if(address.count > 0){
@@ -163,11 +177,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return nil
     }
     
-    func searchDidFinish(test: [String]) {
+    func searchDidFinish(savedKeys: [String]) {
+        println("searchDidFinish")
         var defaults = NSUserDefaults.standardUserDefaults()
-        for key in test {
+        for key in savedKeys {
             println("\(key) = \(defaults.valueForKey(key))")
         }
+        
+        businessTableView.reloadData()
     }
     
     

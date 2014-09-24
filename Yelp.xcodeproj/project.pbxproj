@@ -18,7 +18,6 @@
 		75925F0D19CA4E2E0001DE1F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75925F0B19CA4E2E0001DE1F /* LaunchScreen.xib */; };
 		75925F1919CA4E2E0001DE1F /* YelpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75925F1819CA4E2E0001DE1F /* YelpTests.swift */; };
 		75C4D76B19CBFE8000192675 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4D76A19CBFE8000192675 /* BusinessTableViewCell.swift */; };
-		75C4D77119CD1D9500192675 /* FilterUIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4D77019CD1D9500192675 /* FilterUIBarButtonItem.swift */; };
 		75C4D77319CD2E2600192675 /* FilterUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4D77219CD2E2600192675 /* FilterUIViewController.swift */; };
 		75C4D77519CDFA1500192675 /* YelpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4D77419CDFA1500192675 /* YelpClient.swift */; };
 		75C4D77A19CE3CA200192675 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4D77919CE3CA200192675 /* Business.swift */; };
@@ -52,7 +51,6 @@
 		75925F1719CA4E2E0001DE1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75925F1819CA4E2E0001DE1F /* YelpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YelpTests.swift; sourceTree = "<group>"; };
 		75C4D76A19CBFE8000192675 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
-		75C4D77019CD1D9500192675 /* FilterUIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterUIBarButtonItem.swift; sourceTree = "<group>"; };
 		75C4D77219CD2E2600192675 /* FilterUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterUIViewController.swift; sourceTree = "<group>"; };
 		75C4D77419CDFA1500192675 /* YelpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpClient.swift; sourceTree = "<group>"; };
 		75C4D77619CE061800192675 /* Yelp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yelp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 				75925F0B19CA4E2E0001DE1F /* LaunchScreen.xib */,
 				75925F0019CA4E2E0001DE1F /* Supporting Files */,
 				75C4D76A19CBFE8000192675 /* BusinessTableViewCell.swift */,
-				75C4D77019CD1D9500192675 /* FilterUIBarButtonItem.swift */,
 				75C4D77419CDFA1500192675 /* YelpClient.swift */,
 				75C4D77619CE061800192675 /* Yelp-Bridging-Header.h */,
 				75C4D77919CE3CA200192675 /* Business.swift */,
@@ -303,7 +300,6 @@
 				75C4D77A19CE3CA200192675 /* Business.swift in Sources */,
 				75C4D77319CD2E2600192675 /* FilterUIViewController.swift in Sources */,
 				7581734A19CF4A17006C0719 /* headerViewTableViewCell.swift in Sources */,
-				75C4D77119CD1D9500192675 /* FilterUIBarButtonItem.swift in Sources */,
 				7581734619CF44A2006C0719 /* secondCustomTableViewCell.swift in Sources */,
 				75925F0319CA4E2E0001DE1F /* AppDelegate.swift in Sources */,
 				75C4D77519CDFA1500192675 /* YelpClient.swift in Sources */,
